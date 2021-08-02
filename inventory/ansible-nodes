@@ -7,7 +7,7 @@ node01 ansible_ssh_host=147.182.189.132 ansible_ssh_user=root
 node00
 [db]
 node00
-[apps]
+[app]
 node00
 #[appserver]
 #node02
