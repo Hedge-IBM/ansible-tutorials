@@ -16,9 +16,9 @@
   #    name: httpd >= 2.4
   #    state: present
 
-  - name: Install the latest version of nginx
+  - name: Install the latest version of Epel
     yum:
-      name: nginx
+      name: epel-release
       state: latest
 
   - name: Install a list of packages (suitable replacement for 2.11 loop deprecation warning)
