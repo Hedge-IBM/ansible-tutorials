@@ -11,11 +11,6 @@
       name: httpd
       state: latest
 
-  #- name: Install Apache >= 2.4
-  #  yum:
-  #    name: httpd >= 2.4
-  #    state: present
-
   - name: Install the latest version of Epel
     yum:
       name: epel-release
@@ -42,10 +37,10 @@
       name: httpd
       state: absent
 
-  - name: Install the latest version of Apache from the testing repo
+  - name: Install the latest version of Apache from the testing repo ("Testing" Repo Doesn't Exist)
     yum:
       name: httpd
-      enablerepo: testing
+      #enablerepo: testing
       state: present
 
   - name: Install one specific version of Apache
