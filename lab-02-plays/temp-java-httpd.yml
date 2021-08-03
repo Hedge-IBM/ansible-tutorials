@@ -1,4 +1,9 @@
-host: web
+- host: web
+  gather_facts: true
+  become: true
+  vars:
+    httpd_port: 8080
+  tasks:
 
 - name: Install the latest version of Apache
   yum:
