@@ -11,10 +11,10 @@
       name: httpd
       state: latest
 
-  - name: Install Apache >= 2.4
-    yum:
-      name: httpd>=2.4
-      state: present
+  #- name: Install Apache >= 2.4
+  #  yum:
+  #    name: httpd >= 2.4
+  #    state: present
 
   - name: Install a list of packages (suitable replacement for 2.11 loop deprecation warning)
     yum:
