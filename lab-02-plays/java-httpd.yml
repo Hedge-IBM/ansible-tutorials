@@ -5,12 +5,12 @@
   become: true
   vars:
     httpd_port: 8080
-  tasks:
-  
-  - apt:
-      pkg: apache2
-      state: installed
-    when: ansible_distribution == "RedHat" 
+  tasks: 
+
+  - name: Stop Nginx
+    service: 
+      name: nginx
+      state: stopped
 
   - yum:
       pkg: httpd
@@ -23,7 +23,7 @@
     when: ansible_distribution == "CentOS"
 
   - name: Start httpd
-    service: name=apache2 state=started enabled=yes
+    service: name=httpd state=started enabled=yes
 
 - hosts: dbservers # Host or Group of Selections
   tasks:
