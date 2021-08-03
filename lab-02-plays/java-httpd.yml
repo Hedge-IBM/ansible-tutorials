@@ -7,11 +7,6 @@
     httpd_port: 8080
   tasks: 
 
-  - name: Stop Nginx
-    service: 
-      name: nginx
-      state: stopped
-
   - yum:
       pkg: httpd
       state: installed
