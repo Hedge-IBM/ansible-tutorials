@@ -16,6 +16,11 @@
   #    name: httpd >= 2.4
   #    state: present
 
+  - name: Install the latest version of nginx
+    yum:
+      name: nginx
+      state: latest
+
   - name: Install a list of packages (suitable replacement for 2.11 loop deprecation warning)
     yum:
       name:
