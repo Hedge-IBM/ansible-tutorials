@@ -13,4 +13,5 @@
     - debug: var=play_hosts
 
   - name: Start httpd
-    service: name=httpd state=started enabled=yes
+    #service: name=httpd state=started enabled=yes
+    shell: service httpd start
