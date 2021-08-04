@@ -9,5 +9,5 @@ node00
 node00
 [app]
 node00
-#[appserver]
-#node02
+[appserver]
+node02
