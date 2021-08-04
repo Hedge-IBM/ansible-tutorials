@@ -12,15 +12,15 @@
         dest: /tmp/jinta-output
     - debug: var=play_hosts
 
-  - yum:
-      pkg: httpd
-      state: installed
-    when: ansible_distribution == "RedHat"
+  # - yum:
+  #     pkg: httpd
+  #     state: installed
+  #   when: ansible_distribution == "RedHat"
 
-  - yum:
-      pkg: httpd
-      state: installed
-    when: ansible_distribution == "CentOS"
+  # - yum:
+  #     pkg: httpd
+  #     state: installed
+  #   when: ansible_distribution == "CentOS"
 
   - name: Start httpd
     service: name=httpd state=started enabled=yes
