@@ -1,41 +1,66 @@
----
-# create new group, appservers, and install java
-- hosts: web  # Host or Group of Selections
+- name: Install httpd on webserver
+  hosts: webservers
   gather_facts: true
+  tasks:
+    - yum:
+        pkg: httpd
+        state: installed
+- name: Install mysql on dbserver
+  hosts: dbservers
+  gather_facts: true
+  tasks:
+    - yum:
+        pkg: mariadb 
+        state: installed
+- name: Install Jenkins on appserver
+  hosts: appservers
+  gather_facts: false
   become: true
   vars:
-    httpd_port: 8080
-  tasks: 
-
-  - yum:
-      pkg: httpd
-      state: installed
-    when: ansible_distribution == "RedHat"
-
-  - yum:
-      pkg: httpd
-      state: installed
-    when: ansible_distribution == "CentOS"
-
-  - name: Start httpd
-    service: name=httpd state=started enabled=yes
-
-- hosts: db # Host or Group of Selections
+    JAVA_OPTIONS: "-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"
   tasks:
-  - name: Install Mysql web server # Naming the task for debug purpose
-    yum: pkg=mysql state=installed  # Using module ( doing the task )
-  
-
-- hosts: app
-  become: true
-  tasks:
-  - name: "Install Java and Jenkins"
-  yum:
-      name: "{{ item.value.name }}"
-  loop:
-      "{{ lookup('dict',softwares) }}"
-  - name: "Starting jenkins"
-    service:
-        name: "jenkins"
-        state: started
-        enabled: yes
+  - name: install wget
+    yum:
+      name: wget
+      state: present
+  - name: install openjdk
+    yum:
+      name: java-1.8.0-openjdk
+      state: present
+  - name: download jenkins.repo
+    get_url:
+      url: http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
+      dest: /etc/yum.repos.d/jenkins.repo
+  - name: import jenkins key
+    rpm_key:
+      state: present
+      key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+  - name: install jenkins
+    yum:
+      name: jenkins
+      state: present
+  - name: stop jenkins
+    shell: service jenkins stop
+  - name: Change Jenkins Java Option
+    lineinfile:
+        dest: /etc/sysconfig/jenkins
+        regexp: ^JENKINS_JAVA_OPTIONS=
+        line: JENKINS_JAVA_OPTIONS="{{JAVA_OPTIONS}}"
+  - name: start jenkins
+    systemd:
+      name: jenkins
+      state: started
+  - name: enable jenkins
+    systemd:
+      name: jenkins
+      enabled: true
+  # - name: sleep for 30 seconds and continue with play
+  #   wait_for: timeout=30
+  #   delegate_to: localhost
+  # - name: init password jenkin
+  #   shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+  #   changed_when: false
+  #   register: result
+  # - name: print init password jenkins
+  #   debug:
+  #     var: result.stdout
