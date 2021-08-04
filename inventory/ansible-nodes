@@ -2,12 +2,12 @@
 node02 ansible_ssh_host=206.81.15.120 ansible_ssh_user=root ansible_ssh_private_key_file=~/ansible.pem
 node00 ansible_ssh_host=147.182.189.132 ansible_ssh_user=root
 
-#[webservers]
-#147.182.177.124 ansible_ssh_user=root 
+[webservers]
+147.182.189.132 ansible_ssh_user=root 
 #[dbservers]
-#143.198.35.225 ansible_ssh_user=root
+#147.182.189.132 ansible_ssh_user=root
 #[appservers]
-#143.198.35.225 ansible_ssh_user=root 
+#147.182.189.132 ansible_ssh_user=root 
 
 [web]
 node00
