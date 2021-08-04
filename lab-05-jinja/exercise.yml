@@ -1,0 +1,26 @@
+---
+# create new group, appservers, and install java
+- hosts: webservers  # Host or Group of Selections
+  gather_facts: true
+  become: true
+  vars:
+    httpd_port: 8080
+    user_name: Emmanuel
+  tasks: 
+    - template:
+        src: /home/ec2-user/facts
+        dest: /tmp/jinta-output
+    - debug: var=play_hosts
+
+  - yum:
+      pkg: httpd
+      state: installed
+    when: ansible_distribution == "RedHat"
+
+  - yum:
+      pkg: httpd
+      state: installed
+    when: ansible_distribution == "CentOS"
+
+  - name: Start httpd
+    service: name=httpd state=started enabled=yes
